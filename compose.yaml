@@ -1,42 +1,23 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  vault-server:
+  vault:
     container_name: vault
     image: vault:1.13.3
-    ports:
-      - "8200:8200"
     env_file: .env
+    network_mode: host
     restart: always
+    command: server
     environment:
-      VAULT_ADDR: "http://0.0.0.0:8200"
+      VAULT_ADDR: "http://127.0.0.1:8200"
     volumes:
       - vault:/vault/file
+      - ./config.hcl:/vault/config/config.hcl
+      - ./scripts/vault.init.sh:/usr/local/bin/vault.init.sh
     cap_add:
       - IPC_LOCK
-    networks:
-      vault-network:
-        ipv4_address: 172.21.0.10
-        aliases:
-          - vault-server
-
-  vault-init:
-    build: .
-    env_file: .env
-    environment:
-      VAULT_ADDR: "http://vault-server:8200"
-    networks:
-      vault-network:
-        ipv4_address: 172.21.0.20
-        aliases:
-          - vault-client
 
 volumes:
   vault:
-
-networks:
-  vault-network:
-    ipam:
-      config:
-        - subnet: 172.21.0.0/24
-
+    name: vault.data
+    external: true

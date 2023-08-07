@@ -1,12 +1,13 @@
-# Deploy Vault On Container
-Modify initial secrets on .env file
+# Deploy Vault Production
+Modify vault token on .env file
 ~~~shell
-VAULT_ROOT_TOKEN="your-secret-root-token"
-VAULT_USERNAME="admin"
-VAULT_PASSWORD="admin"
-VAULT_DEV_ROOT_TOKEN_ID="your-secret-root-token"
+MY_VAULT_TOKEN="your-secret-root-token"
 ~~~
-### Start Service
+### Start Vault Server
 ~~~shell
 docker compose up -d
+~~~
+### Init Or Unseal Tokens
+~~~shell
+sh init.sh
 ~~~
