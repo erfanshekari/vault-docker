@@ -6,3 +6,7 @@ VAULT_USERNAME="admin"
 VAULT_PASSWORD="admin"
 VAULT_DEV_ROOT_TOKEN_ID="your-secret-root-token"
 ~~~
+### Start Service
+~~~shell
+docker compose up -d
+~~~
